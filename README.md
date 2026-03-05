@@ -32,7 +32,7 @@ The dataset contains multiple numerical features along with a target variable **
 ## Data Preparation
 The dataset was loaded using **Pandas**:
 
-```python
+
 import pandas as pd
 
 train = pd.read_csv("TRAIN.csv")
