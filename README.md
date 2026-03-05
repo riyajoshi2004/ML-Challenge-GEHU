@@ -8,7 +8,7 @@ The dataset contains multiple numerical features along with a target variable Cl
 Project Pipeline
 
 <p align="center">
-  <img src="IEEE_ML_CHALLENGE/images/pipeline.png" alt="ML Pipeline" width="600"/>
+  <img src="./images/pipeline.png" alt="ML Pipeline" width="600"/>
 </p>
 
 Two datasets were provided:
