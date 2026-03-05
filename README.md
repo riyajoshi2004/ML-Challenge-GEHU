@@ -40,9 +40,10 @@ test = pd.read_csv("TEST.csv")
 
 X = train.drop(columns=["Class"])
 y = train["Class"]
-Baseline Model: Logistic Regression
 
-Why Logistic Regression?
+## Baseline Model: Logistic Regression
+
+## Why Logistic Regression?
 
 Simple and interpretable
 
@@ -55,7 +56,7 @@ model = LogisticRegression(max_iter=1000)
 model.fit(X_train_scaled, y_train)
 Model Evaluation
 
-Metrics used:
+## Metrics used:
 
 Accuracy
 
@@ -79,7 +80,7 @@ model = LogisticRegression(
 Feature Importance Analysis
 coef = pd.Series(model.coef_[0], index=X.columns)
 coef.sort_values(ascending=False).head(10)
-Random Forest Model
+## Random Forest Model
 
 Random Forest is an ensemble learning method combining multiple decision trees.
 
@@ -88,7 +89,7 @@ from sklearn.ensemble import RandomForestClassifier
 rf = RandomForestClassifier(n_estimators=200, random_state=42)
 rf.fit(X_train, y_train)
 
-Advantages:
+## Advantages:
 
 Handles nonlinear relationships
 
@@ -96,7 +97,7 @@ Robust to noise
 
 Performs well on complex datasets
 
-Model Validation
+## Model Validation
 accuracy_score(y_val, y_pred_rf)
 confusion_matrix(y_val, y_pred_rf)
 Cross Validation
@@ -120,7 +121,8 @@ submission = pd.DataFrame({
 })
 
 submission.to_csv("FINAL.csv", index=False)
-Technologies Used
+
+## Technologies Used
 
 Python
 
@@ -132,13 +134,15 @@ NumPy
 
 Jupyter Notebook
 
-Models Used
-Model	Purpose
-Logistic Regression	Baseline model
-Random Forest	Final model
-Results
+## Models Used
 
-The Random Forest model showed strong predictive performance. Metrics included:
+Logistic Regression -	Baseline model
+Random Forest	- Final model
+
+## Results
+
+The Random Forest model showed strong predictive performance. 
+## Metrics included:
 
 Accuracy
 
@@ -148,16 +152,7 @@ Recall
 
 F1 Score
 
-Project Structure
-project/
-│
-├── TRAIN.csv
-├── TEST.csv
-│
-├── notebook.ipynb
-├── FINAL.csv
-└── README.md
-Future Improvements
+## Future Improvements
 
 Hyperparameter tuning
 
