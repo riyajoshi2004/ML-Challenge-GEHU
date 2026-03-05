@@ -6,26 +6,10 @@ The objective of this project is to build a machine learning model capable of ac
 The dataset contains multiple numerical features along with a target variable Class. The goal is to learn the underlying patterns in the training data and generate predictions for the unseen test dataset.
 
 Project Pipeline
-Data Loading
-      ↓
-Data Preprocessing
-      ↓
-Baseline Model (Logistic Regression)
-      ↓
-Model Evaluation
-      ↓
-Cross Validation
-      ↓
-Random Forest Training
-      ↓
-Feature Importance Analysis
-      ↓
-Final Model Training
-      ↓
-Test Prediction
-      ↓
-Submission File Generation
-Dataset
+
+<p align="center">
+  <img src="images/pipeline.png" alt="ML Pipeline" width="600"/>
+</p>
 
 Two datasets were provided:
 
