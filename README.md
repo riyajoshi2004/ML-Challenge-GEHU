@@ -1,273 +1,229 @@
-ML Classification Project
-Problem Statement
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ML Classification Project</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      max-width: 900px;
+      margin: 20px auto;
+      padding: 0 20px;
+      background-color: #f9f9f9;
+      color: #333;
+    }
+    h1, h2, h3, h4 {
+      color: #2c3e50;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+    h2 {
+      margin-top: 30px;
+      border-bottom: 2px solid #2c3e50;
+      padding-bottom: 5px;
+    }
+    img {
+      display: block;
+      margin: 20px auto;
+      max-width: 100%;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+    pre {
+      background: #2d2d2d;
+      color: #f8f8f2;
+      padding: 15px;
+      border-radius: 5px;
+      overflow-x: auto;
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin: 15px 0;
+    }
+    table, th, td {
+      border: 1px solid #ccc;
+    }
+    th, td {
+      padding: 10px;
+      text-align: left;
+    }
+    th {
+      background-color: #ecf0f1;
+    }
+    .center {
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
 
-The objective of this project is to build a machine learning model capable of accurately classifying data into two categories based on the provided features.
+  <h1>ML Classification Project</h1>
 
-The dataset contains multiple numerical features along with a target variable Class. The goal is to learn the underlying patterns in the training data and generate predictions for the unseen test dataset.
+  <h2>Problem Statement</h2>
+  <p>
+    The objective of this project is to build a machine learning model capable of accurately classifying data into two categories based on the provided features.
+  </p>
+  <p>
+    The dataset contains multiple numerical features along with a target variable <strong>Class</strong>. The goal is to learn the underlying patterns in the training data and generate predictions for the unseen test dataset.
+  </p>
 
-Project Pipeline
-
-<p align="center">
+  <h2>Project Pipeline</h2>
   <img src="pipeline.png" alt="ML Pipeline" width="600"/>
-</p>
 
-Two datasets were provided:
+  <h2>Datasets</h2>
 
-Training Dataset
+  <h3>Training Dataset (TRAIN.csv)</h3>
+  <ul>
+    <li>Used for learning the relationship between features and the target variable.</li>
+    <li>Contains:
+      <ul>
+        <li>Feature columns</li>
+        <li>Target column <strong>Class</strong></li>
+      </ul>
+    </li>
+  </ul>
 
-Used for learning the relationship between features and the target variable.
+  <h3>Test Dataset (TEST.csv)</h3>
+  <ul>
+    <li>Contains feature columns and <strong>ID</strong> column.</li>
+    <li>No target variable; predictions are generated for this dataset.</li>
+  </ul>
 
-TRAIN.csv
-
-Contains:
-
-Feature columns
-
-Target column Class
-
-Test Dataset
-TEST.csv
-
-Contains:
-
-Feature columns
-
-ID column
-
-No target variable
-
-Predictions are generated for this dataset.
-
-Data Preparation
-
-The dataset was loaded using Pandas.
-
-Example:
-
+  <h2>Data Preparation</h2>
+  <p>The dataset was loaded using <strong>Pandas</strong>:</p>
+  <pre><code>import pandas as pd
 train = pd.read_csv("TRAIN.csv")
 test = pd.read_csv("TEST.csv")
+X = train.drop(columns=["Class"])
+y = train["Class"]</code></pre>
 
-Feature matrix and target variable were separated:
-
-X → feature variables
-y → target variable (Class)
-Baseline Model: Logistic Regression
-
-A Logistic Regression model was trained as the baseline model to understand the dataset.
-
-Why Logistic Regression?
-
-Simple and interpretable
-
-Provides insight into feature importance
-
-Good baseline for classification problems
-
-Model training:
-
+  <h2>Baseline Model: Logistic Regression</h2>
+  <p>Why Logistic Regression?</p>
+  <ul>
+    <li>Simple and interpretable</li>
+    <li>Provides insight into feature importance</li>
+    <li>Good baseline for classification problems</li>
+  </ul>
+  <pre><code>from sklearn.linear_model import LogisticRegression
 model = LogisticRegression(max_iter=1000)
-model.fit(X_train_scaled, y_train)
-Model Evaluation
+model.fit(X_train_scaled, y_train)</code></pre>
 
-The model was evaluated using multiple classification metrics.
+  <h2>Model Evaluation</h2>
+  <p>Metrics used:</p>
+  <ul>
+    <li>Accuracy</li>
+    <li>Precision</li>
+    <li>Recall</li>
+    <li>Confusion Matrix</li>
+  </ul>
+  <pre><code>from sklearn.metrics import accuracy_score, precision_score, recall_score, confusion_matrix
+accuracy_score(y_val, y_pred)</code></pre>
 
-Metrics used:
-
-Accuracy
-
-Precision
-
-Recall
-
-Confusion Matrix
-
-Example:
-
-accuracy_score
-precision_score
-recall_score
-confusion_matrix
-
-These metrics help evaluate how well the model performs on unseen data.
-
-Handling Class Imbalance
-
-To improve the baseline model, class balancing was introduced.
-
-class_weight = "balanced"
-
-Example:
-
-model = LogisticRegression(
+  <h2>Handling Class Imbalance</h2>
+  <pre><code>model = LogisticRegression(
     max_iter=1000,
     class_weight="balanced"
-)
+)</code></pre>
 
-This helps the model give equal importance to both classes.
+  <h2>Feature Importance Analysis</h2>
+  <pre><code>coef = pd.Series(model.coef_[0], index=X.columns)
+coef.sort_values(ascending=False).head(10)</code></pre>
 
-Feature Importance Analysis
+  <h2>Random Forest Model</h2>
+  <p>Random Forest is an ensemble learning method combining multiple decision trees.</p>
+  <pre><code>from sklearn.ensemble import RandomForestClassifier
+rf = RandomForestClassifier(n_estimators=200, random_state=42)
+rf.fit(X_train, y_train)</code></pre>
 
-Logistic Regression coefficients were used to understand feature impact.
+  <h3>Advantages</h3>
+  <ul>
+    <li>Handles nonlinear relationships</li>
+    <li>Robust to noise</li>
+    <li>Performs well on complex datasets</li>
+  </ul>
 
-Example:
+  <h2>Model Validation</h2>
+  <pre><code>accuracy_score(y_val, y_pred_rf)
+confusion_matrix(y_val, y_pred_rf)</code></pre>
 
-coef = pd.Series(model.coef_[0], index=X.columns)
-coef.sort_values(ascending=False).head(10)
+  <h2>Cross Validation</h2>
+  <pre><code>from sklearn.model_selection import cross_val_score
+scores = cross_val_score(rf, X, y, cv=5, scoring="accuracy")</code></pre>
 
-This step helps identify the most influential features in the dataset.
+  <h2>Feature Importance from Random Forest</h2>
+  <pre><code>importances = pd.Series(rf.feature_importances_, index=X.columns)
+importances.sort_values(ascending=False).head(10)</code></pre>
 
-Random Forest Model
+  <h2>Final Model Training</h2>
+  <pre><code>rf_final.fit(X, y)</code></pre>
 
-To improve performance, a Random Forest Classifier was trained.
-
-Random Forest is an ensemble learning method that combines multiple decision trees to produce more robust predictions.
-
-Model configuration:
-
-RandomForestClassifier(
-    n_estimators=200,
-    random_state=42
-)
-
-Advantages:
-
-Handles nonlinear relationships
-
-Robust to noise
-
-Performs well on complex datasets
-
-Model Validation
-
-The Random Forest model was evaluated using:
-
-Accuracy
-
-Precision
-
-Recall
-
-Confusion Matrix
-
-Example:
-
-accuracy_score(y_val, y_pred_rf)
-confusion_matrix(y_val, y_pred_rf)
-Cross Validation
-
-To ensure the model generalizes well, 5-fold cross validation was applied.
-
-scores = cross_val_score(rf, X, y, cv=5, scoring="accuracy")
-
-Cross-validation helps:
-
-Reduce overfitting
-
-Provide reliable performance estimates
-
-Evaluate model stability
-
-Feature Importance from Random Forest
-
-Random Forest provides built-in feature importance scores.
-
-Example:
-
-importances = pd.Series(rf.feature_importances_, index=X.columns)
-importances.sort_values(ascending=False).head(10)
-
-This helps identify the features that contribute most to predictions.
-
-Final Model Training
-
-Once the model was validated, the final Random Forest model was trained on the entire training dataset.
-
-rf_final.fit(X, y)
-
-Training on all available data improves model learning before generating final predictions.
-
-Test Prediction
-
-The test dataset was prepared by separating the ID column.
-
-Example:
-
-test_ids = test["ID"]
+  <h2>Test Prediction & Submission</h2>
+  <pre><code>test_ids = test["ID"]
 X_test = test.drop(columns=["ID"])
-
-Predictions were generated using the trained Random Forest model.
-
 predictions = rf_final.predict(X_test)
-Submission File Generation
-
-The final predictions were stored in a submission file.
-
-Example:
 
 submission = pd.DataFrame({
     "ID": test_ids,
     "CLASS": predictions
 })
+submission.to_csv("FINAL.csv", index=False)</code></pre>
 
-submission.to_csv("FINAL.csv", index=False)
+  <h2>Technologies Used</h2>
+  <ul>
+    <li>Python</li>
+    <li>Pandas</li>
+    <li>Scikit-learn</li>
+    <li>NumPy</li>
+    <li>Jupyter Notebook</li>
+  </ul>
 
-Final output:
+  <h2>Models Used</h2>
+  <table>
+    <tr>
+      <th>Model</th>
+      <th>Purpose</th>
+    </tr>
+    <tr>
+      <td>Logistic Regression</td>
+      <td>Baseline model</td>
+    </tr>
+    <tr>
+      <td>Random Forest</td>
+      <td>Final model</td>
+    </tr>
+  </table>
 
-FINAL.csv
+  <h2>Results</h2>
+  <p>The Random Forest model showed strong predictive performance. Metrics included:</p>
+  <ul>
+    <li>Accuracy</li>
+    <li>Precision</li>
+    <li>Recall</li>
+    <li>F1 Score</li>
+  </ul>
 
-This file can be uploaded to the competition platform for evaluation.
-
-Technologies Used
-
-Python
-
-Pandas
-
-Scikit-learn
-
-NumPy
-
-Jupyter Notebook
-
-Models Used
-Model	Purpose
-Logistic Regression	Baseline model
-Random Forest	Final model
-Results
-
-The Random Forest model showed strong predictive performance and was used for generating the final submission.
-
-Evaluation metrics included:
-
-Accuracy
-
-Precision
-
-Recall
-
-F1 Score
-
-Project Structure
-project/
+  <h2>Project Structure</h2>
+  <pre><code>project/
 │
 ├── TRAIN.csv
 ├── TEST.csv
 │
 ├── notebook.ipynb
-│
 ├── FINAL.csv
-│
-└── README.md
-Future Improvements
+└── README.md</code></pre>
 
-Possible improvements for better performance:
+  <h2>Future Improvements</h2>
+  <ul>
+    <li>Hyperparameter tuning</li>
+    <li>Gradient Boosting models</li>
+    <li>XGBoost / LightGBM</li>
+    <li>Feature engineering</li>
+    <li>SHAP model explainability</li>
+  </ul>
 
-Hyperparameter tuning
-
-Gradient Boosting models
-
-XGBoost / LightGBM
-
-Feature engineering
-
-SHAP model explainability
+</body>
+</html>
